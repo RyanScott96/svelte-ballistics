@@ -230,95 +230,277 @@
 </div>
 
 <style>
+	/* =========================
+	   Theme Variables
+	   ========================= */
+
+	:root {
+		--bg: #f6f7f9;
+		--card: #ffffff;
+		--border: #e5e7eb;
+		--text: #111827;
+		--muted: #6b7280;
+		--accent: #2563eb;
+		--accent-soft: #e0e7ff;
+		--danger: #dc2626;
+		--success: #16a34a;
+		--row-hover: #f1f5f9;
+		--row-alt: #fafafa;
+		--radius: 12px;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--bg: #0f172a;
+			--card: #020617;
+			--border: #1e293b;
+			--text: #e5e7eb;
+			--muted: #94a3b8;
+			--accent: #60a5fa;
+			--accent-soft: rgba(96, 165, 250, 0.25);
+			--danger: #f87171;
+			--success: #4ade80;
+			--row-hover: #020617;
+			--row-alt: #020617;
+		}
+	}
+
+	/* =========================
+	   Global / Typography
+	   ========================= */
+	:global(body) {
+		background: var(--bg);
+		color: var(--text);
+		font-family:
+			'Inter',
+			ui-sans-serif,
+			system-ui,
+			-apple-system,
+			BlinkMacSystemFont,
+			'Segoe UI',
+			Roboto,
+			'Helvetica Neue',
+			Arial,
+			'Noto Sans',
+			sans-serif;
+	}
+
+	h1 {
+		font-size: 1.7rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		letter-spacing: -0.02em;
+	}
+
+	h2 {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--muted);
+		margin-bottom: 0.75rem;
+	}
+
+	/* =========================
+	   Layout
+	   ========================= */
+
 	.form-container {
-		padding: 2rem;
+		padding: 3rem 1rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 	}
 
 	form {
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
-		max-width: 400px;
+		gap: 1.25rem;
+		width: 100%;
+		max-width: 500px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+	}
+
+	.form-row {
+		display: flex;
+		gap: 1.5rem;
 	}
 
 	.form-col {
 		display: flex;
 		flex-direction: column;
+		gap: 0.65rem;
+		flex: 1;
 	}
 
-	.form-row {
-		display: flex;
-		flex-direction: row;
+	@media (max-width: 768px) {
+		.form-row {
+			flex-direction: column;
+		}
 	}
+
+	/* =========================
+	   Labels & Inputs
+	   ========================= */
 
 	label {
 		display: flex;
 		flex-direction: column;
 	}
 
-	button {
-		width: 100px;
-		padding: 0.5rem;
-		margin-top: 1rem;
+	label h4 {
+		font-size: 0.65rem;
+		font-weight: 600;
+		color: var(--muted);
+		margin-bottom: 0.25rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	input[type='number'] {
+		padding: 0.55rem 0.65rem;
+		font-size: 0.9rem;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+		background: var(--card);
+		color: var(--text);
+		transition: border-color 0.15s, box-shadow 0.15s;
+	}
+
+	input::placeholder {
+		color: var(--muted);
+	}
+
+	input:focus {
+		outline: none;
+		border-color: var(--accent);
+		box-shadow: 0 0 0 2px var(--accent-soft);
+	}
+
+	/* =========================
+	   Radio Buttons (Segmented)
+	   ========================= */
+
+	.radio-group {
+		display: inline-flex;
+		gap: 0.4rem;
+		align-items: center;
+		padding: 0.15rem;
+		border-radius: 999px;
+		background: var(--row-hover);
+		width: fit-content;
+		margin-top: 0.25rem;
 	}
 
 	.radio-button {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		padding: 0.25rem 0.55rem;
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--muted);
+		cursor: pointer;
+		user-select: none;
+		transition: background 0.15s, color 0.15s;
 	}
 
-	.radio-group {
-		display: flex;
-		flex-direction: row;
-		gap: 1rem;
-		align-items: center;
+	.radio-button input {
+		display: none;
 	}
+
+	.radio-button:has(input:checked) {
+		background: var(--accent);
+		color: #fff;
+	}
+
+	/* =========================
+	   Button
+	   ========================= */
+
+	button {
+		width: 100%;
+		padding: 0.7rem 1rem;
+		border-radius: 10px;
+		border: none;
+		background: linear-gradient(180deg, #3b82f6, var(--accent));
+		color: #fff;
+		font-weight: 600;
+		cursor: pointer;
+		transition: box-shadow 0.15s, transform 0.05s;
+	}
+
+	button:hover {
+		box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+	}
+
+	button:active {
+		transform: translateY(1px);
+	}
+
+	/* =========================
+	   Results / Table
+	   ========================= */
 
 	.results-container {
 		margin-top: 2rem;
 		width: 100%;
-		max-width: 600px;
-	}
-
-	.table-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		text-align: center;
+		max-width: 720px;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1rem;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 	}
 
 	table {
 		width: 100%;
 		border-collapse: collapse;
+		font-size: 0.85rem;
 		text-align: right;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family: inherit;
+	}
+
+	th,
+	td {
+		padding: 0.6rem 0.55rem;
+		border-bottom: 1px solid var(--border);
 	}
 
 	th {
-		border-bottom: 2px solid #ccc;
-		padding: 0.5rem;
+		text-transform: uppercase;
+		font-size: 0.65rem;
+		letter-spacing: 0.08em;
+		color: var(--muted);
+		background: var(--card);
+		position: sticky;
+		top: 0;
 	}
 
-	td {
-		padding: 0.5rem;
-		border-bottom: 1px solid hsl(0, 0%, 93%);
+	tbody td {
+		font-family: 'Inter Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-weight: 500;
+		letter-spacing: 0.4px;
+	}
+
+	tbody tr:nth-child(even) {
+		background: var(--row-alt);
+	}
+
+	tbody tr:hover {
+		background: var(--row-hover);
 	}
 
 	.drop-neg {
-		color: #d32f2f;
-	}
-	.drop-pos {
-		color: #388e3c;
+		color: var(--danger);
+		font-weight: 600;
 	}
 
-	tr:hover {
-		background-color: #f9f9f9;
+	.drop-pos {
+		color: var(--success);
+		font-weight: 600;
 	}
 </style>
+

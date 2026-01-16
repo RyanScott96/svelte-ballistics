@@ -1,6 +1,19 @@
 import type { State } from '$lib/utils/math';
-import { farenheitToCelsius, farenheitToRankine, hpaToPSF, inchHgToPSF, sqinToSqft } from '$lib/utils/units';
-import { GAS_DRY_AIR, GAS_WATER_VAPOR, GRAVITY_FPS, TETENS_C1, TETENS_C2, TETENS_C3 } from '$lib/physics/constants';
+import {
+	farenheitToCelsius,
+	farenheitToRankine,
+	hpaToPSF,
+	inchHgToPSF,
+	sqinToSqft
+} from '$lib/utils/units';
+import {
+	GAS_DRY_AIR,
+	GAS_WATER_VAPOR,
+	GRAVITY_FPS,
+	TETENS_C1,
+	TETENS_C2,
+	TETENS_C3
+} from '$lib/physics/constants';
 import { G1_TABLE, G7_TABLE, getCoefficient } from '$lib/physics/drag-table';
 
 export type Atmosphere = {
@@ -33,7 +46,8 @@ export function calculateAirDensity(
 	const Pv_psf = hpaToPSF((humidityPercent / 100) * Pvsat_hpa);
 
 	// Ideal Gas Law for Moist Air: rho = (Pd / (Rd * T)) + (Pv / (Rv * T))
-	const density = (P_psf - Pv_psf) / (GAS_DRY_AIR * T_rankine) + Pv_psf / (GAS_WATER_VAPOR * T_rankine);
+	const density =
+		(P_psf - Pv_psf) / (GAS_DRY_AIR * T_rankine) + Pv_psf / (GAS_WATER_VAPOR * T_rankine);
 	return density;
 }
 
@@ -57,7 +71,7 @@ export function computeDrag(
 
 	// Acceleration = (0.5 * rho * v^2 * Cd) / BC
 	const sd = (bc * 4) / (sqinToSqft(1) * Math.PI); // sectional density in lbs/ft²
-	const dragAccel = (rho * (speed ** 2) * cd) /  (2 * sd);
+	const dragAccel = (rho * speed ** 2 * cd) / (2 * sd);
 
 	return [-dragAccel * (vx / speed), -dragAccel * (vy / speed)];
 }
@@ -68,6 +82,6 @@ export function derivative(s: State, atmosphere: Atmosphere, projectile: Project
 		x: s.vx,
 		y: s.vy,
 		vx: dragx,
-		vy: dragy - GRAVITY_FPS 
+		vy: dragy - GRAVITY_FPS
 	};
 }
