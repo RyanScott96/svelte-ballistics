@@ -385,6 +385,7 @@
 
 	.radio-group {
 		display: inline-flex;
+		flex-direction: row;
 		gap: 0.4rem;
 		align-items: center;
 		padding: 0.15rem;
