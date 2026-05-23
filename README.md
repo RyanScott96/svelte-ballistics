@@ -1,6 +1,6 @@
 # Svelte Ballistics
 
-A reactive, high-precision exterior ballistics simulator built with SvelteKit and TypeScript. 
+A high-precision exterior ballistics simulator built with SvelteKit and TypeScript. 
 
 Unlike basic kinematic calculators, this engine utilizes a true numerical integrator to model non-linear bullet drag, atmospheric density, and trajectory arcs in real-time.
 
