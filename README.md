@@ -20,5 +20,8 @@ deno i
 
 **2. Run Development Server**
 ```sh
-npm run dev -- --open
+deno task dev
 ```
+
+**3. View in Browser**
+Visit the address that should be output into your terminal.
