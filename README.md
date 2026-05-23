@@ -1,38 +1,24 @@
-# sv
+# Svelte Ballistics
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A reactive, high-precision exterior ballistics simulator built with SvelteKit and TypeScript. 
 
-## Creating a project
+Unlike basic kinematic calculators, this engine utilizes a true numerical integrator to model non-linear bullet drag, atmospheric density, and trajectory arcs in real-time.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 🧠 Core Physics & Architecture
 
+* **Runge-Kutta 4th Order (RK4) Integrator:** Solves the equations of motion using RK4 to handle the complex, non-linear deceleration curves of G1 and G7 drag models, ensuring high stability over long flight times.
+* **Atmospheric Modeling:** Calculates true air density by incorporating the Tetens equation for vapor pressure, accounting for the exact impact of humidity on drag.
+* **Algorithmic Efficiency:** Utilizes a strict $O(\log n)$ binary search combined with linear interpolation to query 80-point Mach drag tables, allowing the engine to calculate hundreds of trajectory steps in milliseconds without stuttering the browser's main thread.
+* **Bisection Angle Solver:** Computes the exact required barrel elevation for a given zero-range using a fixed-iteration binary search, guaranteeing 64-bit float precision without the risk of infinite loops typical in epsilon-tolerance solvers.
+
+## 🛠️ Build and Run
+
+**1. Install Dependencies**
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+deno i
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+**2. Run Development Server**
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
